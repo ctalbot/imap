@@ -86,7 +86,8 @@ class Connection
      */
     public function createMailbox($name)
     {
-        if (\imap_createmailbox($this->resource, $this->server . $name)) {
+        // Add support for International characters
+        if (\imap_createmailbox($this->resource, \imap_utf7_encode($this->server . $name))) {
             $this->mailboxNames = $this->mailboxes = null;
 
             return $this->getMailbox($name);
